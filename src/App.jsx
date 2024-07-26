@@ -1,5 +1,5 @@
 import './App.css';
-import ClockProject from "../../Clock/src/Components/Clock";
+import ClockProject from "./Components/ClockProject";
 import React, { useState, useEffect } from 'react';
 import { IoIosRefresh } from "react-icons/io";
 import { FaLaptopCode } from "react-icons/fa6";
@@ -55,7 +55,7 @@ const Modal = ({ isOpen, onClose }) => {
           </div>
         </div>
         
-        <a href='https://github.com/john/project' target='_blank' rel='noopener noreferrer' className='text-white text-4xl hover:text-red-700'>
+        <a href='https://github.com/mhdroshanvp/Clock-Project' target='_blank' rel='noopener noreferrer' className='text-white text-4xl hover:text-red-700'>
         <RiCodeBoxFill />
         </a>
       </div>
