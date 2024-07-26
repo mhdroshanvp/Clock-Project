@@ -1,0 +1,11 @@
+/* App.css */
+.gradient-text {
+  background: linear-gradient(to right, #313b11, #df0a0a); /* Example gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-text1 {
+  background: linear-gradient(to right, #20201f, #9c0808); /* Example gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
