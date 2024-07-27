@@ -3,8 +3,8 @@ import ClockProject from "./Components/ClockProject";
 import React, { useState, useEffect } from 'react';
 import { IoIosRefresh } from "react-icons/io";
 import { FaLaptopCode } from "react-icons/fa6";
-import bgc from "../../Clock/src/Assets/aesthetic.jpeg";
-import clck from "../../Clock/src/Assets/clock.jpeg";
+import bgc from "../../Clock/src/Assets/japan-background-digital-art.jpg";
+import clck from "../../Clock/src/Assets/rain.jpeg";
 import modal from "../../Clock/src/Assets/last.jpg";
 import { IoMdCloseCircle } from "react-icons/io";
 import { FaReact } from "react-icons/fa";
@@ -15,22 +15,22 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { RiTwitterXLine } from "react-icons/ri";
 import { RiCodeBoxFill } from "react-icons/ri";
-
+import { BsArrowsFullscreen, BsFullscreenExit } from "react-icons/bs";
 
 // Modal 
 const Modal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-<div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'>
-      <div className='relative  p-6 rounded-lg shadow-lg w-[600px] h-[230px] flex flex-col items-center'
-      style={{ backgroundImage: `url(${modal})` }}
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'>
+      <div className='relative p-6 rounded-lg shadow-lg w-[600px] h-[230px] flex flex-col items-center'
+        style={{ backgroundImage: `url(${modal})` }}
       >
         <button
           onClick={onClose}
           className='absolute top-2 right-2'
         >
-          <IoMdCloseCircle className='text-white text-2xl hover:text-red-600'/>
+          <IoMdCloseCircle className='text-white text-2xl hover:text-red-600' />
         </button>
         <h2 className='text-xl font-bold mb-4 text-white font-mono'>Clock Project</h2>
         <div className='flex flex-row'>
@@ -41,22 +41,22 @@ const Modal = ({ isOpen, onClose }) => {
         </div>
         
         <div className='text-center mb-4'>
-          <p className='font-semibold text-white font-thin'>Developed by <span className=' font-mono text-red-600'>Muhammed Roshan Vp</span></p>
+          <p className='text-white font-thin'>Developed by <span className='font-mono text-red-600'>Muhammed Roshan Vp</span></p>
           <div className='flex justify-center gap-4 mt-2'>
             <a href='https://github.com/mhdroshanvp' target='_blank' rel='noopener noreferrer' className='text-white text-2xl hover:text-purple-700'>
-            <FaGithub />
+              <FaGithub />
             </a>
             <a href='https://www.linkedin.com/in/mhdroshanvp/' target='_blank' rel='noopener noreferrer' className='text-white text-2xl hover:text-blue-700'>
-            <FaLinkedin />
+              <FaLinkedin />
             </a>
             <a href='https://x.com/rxshanvp' target='_blank' rel='noopener noreferrer' className='text-white text-2xl hover:text-purple-700'>
-            <RiTwitterXLine />
+              <RiTwitterXLine />
             </a>
           </div>
         </div>
         
         <a href='https://github.com/mhdroshanvp/Clock-Project' target='_blank' rel='noopener noreferrer' className='text-white text-4xl hover:text-red-700'>
-        <RiCodeBoxFill />
+          <RiCodeBoxFill />
         </a>
       </div>
     </div>  
@@ -78,6 +78,7 @@ function App() {
 
   const [currentTime, setCurrentTime] = useState(getCurrentTime());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const refreshTime = () => {
     setCurrentTime(getCurrentTime());
@@ -89,6 +90,32 @@ function App() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const toggleFullScreen = () => {
+    const elem = document.documentElement;
+    if (!isFullScreen) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) { // Firefox
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) { // IE/Edge
+        elem.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { // IE/Edge
+        document.msExitFullscreen();
+      }
+    }
+    setIsFullScreen(!isFullScreen);
   };
 
   useEffect(() => {
@@ -105,24 +132,31 @@ function App() {
         className='flex justify-center h-screen items-center bg-cover bg-center'
         style={{ backgroundImage: `url(${bgc})` }}
       >
-        <div className=' w-[300px] h-[300px] flex flex-col justify-center items-center rounded-[20px] p-4'
-        style={{ backgroundImage: `url(${clck})` }}
+        <div className='w-[300px] h-[300px] flex flex-col justify-center items-center rounded-[20px] p-4'
+          style={{ backgroundImage: `url(${clck})` }}
         >
+          <button
+            onClick={toggleFullScreen}
+            className='absolute top-10 right-10 p-2 border  border-gray-500 rounded-full shadow-md'
+          >
+            {isFullScreen ? <BsFullscreenExit className='text-2xl text-gray-400' /> : <BsArrowsFullscreen className='text-gray-400 text-2xl' />}
+          </button>
+
           <div className='relative w-full h-full flex flex-col items-center justify-center'>
             <div className='mb-4 text-center text-lg font-semibold font-mono gradient-text1'>
               {currentTime}
             </div>
             <button
               onClick={refreshTime}
-              className='absolute top-2 right-0 bg-black p-2 rounded-full shadow-md'
+              className='absolute top-2 right-0 border border-gray-500 p-2 rounded-full shadow-md'
             >
-              <IoIosRefresh className='text-purple-700'/>
+              <IoIosRefresh className='text-purple-700' />
             </button>
             <button
               onClick={openModal}
-              className='absolute top-2 left-0 bg-black p-2 rounded-full shadow-md'
+              className='absolute top-2 left-0 border border-gray-500 p-2 rounded-full shadow-md'
             >
-              <FaLaptopCode className='text-purple-700'/>
+              <FaLaptopCode className='text-purple-700' />
             </button>
             <ClockProject />
             <div className='mt-6 text-center text-lg font-semibold font-serif gradient-text'>
